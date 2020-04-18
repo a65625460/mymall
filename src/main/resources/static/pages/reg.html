@@ -1,0 +1,111 @@
+<form id="reg-form">
+    <div class="col-lg-offset-4 col-lg-4
+                col-md-offset-4 col-md-4
+                col-sm-offset-4 col-sm-4
+                col-xd-offset-4 col-xd-4
+    ">
+        <h3 class="pull-middle">用户注册</h3>
+        <div class="form-group">
+            <label>用户名</label>
+            <input id="reg-username" type="text" class="form-control" placeholder="请输入用户名" v-model="username">
+        </div>
+        <div class="form-group">
+            <label>电子邮箱</label>
+            <input id="reg-email" type="text" class="form-control" placeholder="请输入电子邮箱" v-model="email">
+        </div>
+        <div class="form-group">
+            <label>用户密码</label>
+            <input id="reg-password" type="password" class="form-control" placeholder="请输入用户密码" v-model="password">
+        </div>
+        <div class="form-group">
+            <label>确认密码</label>
+            <input id="reg-rePassword" type="password" class="form-control" placeholder="请确认用户密码" v-model="rePassword">
+        </div>
+        <button id="btn-reg" type="button" class="btn btn-default">注册</button>
+    </div>
+</form>
+<script>
+    // 定义密码限制条件
+    var passwordLengthMin = 6;
+    var passwordLengthMax = 11;
+    // 定义用户名限制条件
+    var usernameLengthMin = 4;
+    var usernameLengthMax = 20;
+    // 定义邮箱限制条件
+    var emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+    // 创建vue对象
+    var vm = new Vue({
+        el: '#reg-form',
+        data: {
+            username:"",
+            email:"",
+            password:"",
+            rePassword:""
+        }
+    });
+    // 页面就绪事件
+    $(function(){
+        // 绑定提交按钮事件
+        $("#btn-reg").click(reg)
+    });
+
+    // 注册
+    function reg(){
+        // 调用验证方法
+        if(regValidation()){
+            var url = "/user/reg";
+            var param = {
+                username:vm.username,
+                password:vm.password,
+                email:vm.email
+            };
+            // 发送AJAX请求
+            $.post(url,param,function(result){
+               if(result.state === 2000){
+                   alert("注册成功!");
+               }else{
+                   alert(result.message);
+               }
+            });
+        }
+    }
+
+    // 验证用户输入的数据
+    function regValidation(){
+        // 获取用户名长度
+        var userLength = vm.username.length;
+        // 判断用户名长度是否不在范围
+        if(userLength < usernameLengthMin || userLength > usernameLengthMax){
+            // 是：显示提示
+
+            // 返回false
+            return false;
+        }
+        // 获取密码长度
+        var pwdLength = vm.password.length;
+        // 判断密码长度是否不在范围
+        if(pwdLength < passwordLengthMin || pwdLength > passwordLengthMax){
+            // 是：显示提示
+
+            // 返回false
+            return false;
+        }
+        // 判断邮箱是否符合规则
+        if(!emailReg.test(vm.email)){
+            // 是：显示提示
+
+            // 返回false
+            return false;
+        }
+        // 判断两次输入密码是否不一致
+        if(vm.password != vm.rePassword){
+            // 是：显示提示
+
+            // 返回false
+            return false;
+        }
+        // 返回true
+        return true;
+    }
+</script>
+

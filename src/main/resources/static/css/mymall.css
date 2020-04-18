@@ -1,0 +1,17 @@
+/*导航栏登录按钮样式*/
+#msg-login{
+    color: red;
+}
+/*a标签鼠标悬浮时的样式*/
+a:hover{
+    cursor: pointer;
+}
+/*表单容器*/
+.form-container{
+    border:1px solid #ddd;
+}
+/*使组件居中*/
+.pull-middle{
+    margin: 0 auto;
+    display: table;
+}

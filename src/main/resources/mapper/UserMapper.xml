@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dong.mymall.mapper.UserMapper">
+
+    <!--插入用户数据-->
+    <!--Integer insert(UserDO userDO);-->
+    <insert id="insert">
+        INSERT INTO t_user(
+	        username,password,salt,email,
+	        nickname,phone,gender,age,
+	        avatar,is_delete,create_user,create_time,
+	        modified_user,modified_time
+        )VALUES(
+            #{username},#{password},#{salt},#{email},
+	        #{nickname},#{phone},#{gender},#{age},
+	        #{avatar},#{isDelete},#{createUser},#{createTime},#{modifiedUser},
+	        #{modifiedTime}
+        )
+    </insert>
+
+    <!--根据用户名查找用户-->
+    <!--UserDO findByUsername(String username);-->
+    <select id="findByUsername" resultType="com.dong.mymall.pojo.UserDO">
+        SELECT * FROM t_user WHERE username=#{username}
+    </select>
+
+    <!--根据邮箱查找用户-->
+    <!--UserDO findByEmail(String email);-->
+    <select id="findByEmail" resultType="com.dong.mymall.pojo.UserDO">
+        SELECT * FROM t_user WHERE email=#{email}
+    </select>
+
+</mapper>
