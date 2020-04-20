@@ -21,8 +21,12 @@ public class GlobalExceptionHandler {
             result.setState(4003);
         } else if (e instanceof UsernameDuplicateException) {
             result.setState(4004);
+        } else if (e instanceof UserNotFoundException) {
+            result.setState(4005);
         } else if (e instanceof InsertException) {
             result.setState(5001);
+        } else if (e instanceof UpdateException) {
+            result.setState(5002);
         } else {
             result.setState(0);
         }

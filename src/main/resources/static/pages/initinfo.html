@@ -1,0 +1,88 @@
+<form id="form-init-info">
+    <div class="col-lg-offset-4 col-lg-4
+                col-md-offset-4 col-md-4
+                col-sm-offset-4 col-sm-4
+                col-xd-offset-4 col-xd-4
+    ">
+        <h3 class="pull-middle">个人信息</h3>
+        <div>
+            <label>昵称</label>
+            <span>
+                <input id="init-nickname" type="text" class="form-control" placeholder="请输入昵称" v-model="nickname">
+                <label class="msg-exception">{{exNickname}}</label>
+            </span>
+        </div>
+        <div>
+            <label>电话号码</label>
+            <input id="init-phone" type="text" class="form-control" placeholder="请输入电话号码" v-model="phone">
+            <label class="msg-exception">{{exPhone}}</label>
+        </div>
+        <div>
+            <label>年龄</label>
+            <input id="init-age" type="text" class="form-control" placeholder="请输入年龄" v-model="age">
+            <label class="msg-exception">{{exAge}}</label>
+        </div>
+        <label class="radio-inline">
+            <input type="radio" name="gender" id="init-gender-male" value="1" v-model="gender"> 男
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="gender" id="init-gender-female" value="0" v-model="gender"> 女
+        </label>
+        <br/>
+        <br/>
+        <button id="btn-init-info" type="button" class="btn btn-default">确定</button>
+        <a id="skip-info" class="pull-right">跳过</a>
+    </div>
+</form>
+<script>
+    // 创建vue对象
+    var initInfoVM = new Vue({
+        el: '#form-init-info',
+        data: {
+            nickname:"",
+            phone:"",
+            age:"",
+            gender:"",
+            exNickname:"",
+            exPhone:"",
+            exAge:""
+        }
+    });
+    // 页面就绪事件
+    $(function(){
+        // 进度条颜色改变
+        updateProgressInfo($("#progress-reg"),$("#progress-info"));
+        // 判定确定按钮
+        $("#btn-init-info").click(initInfo);
+    });
+
+    // 更新个人信息
+    function initInfo(){
+        // 获取用户id
+        var id = $("#mainContentId").data("userId");
+        var url = "/user/modifyInfo";
+        var param = {
+            id:id,
+            nickname:initInfoVM.nickname,
+            phone:initInfoVM.phone,
+            age:initInfoVM.age,
+            gender:initInfoVM.gender
+        }
+        // 发送AJAX请求
+        $.post(url,param,function(result){
+            if(result.state == 2000){
+                // 成功的提示信息
+                alert("修改成功");
+                // TODO 加载上传头像页面
+            }else{
+                alert(result.message);
+            }
+        });
+    }
+
+    // 初始化个人信息时更新进度条
+    function updateProgressInfo(first,second){
+        first.addClass("progress-bar-success");
+        second.removeClass("progress-bar-warning");
+    }
+</script>

@@ -1,25 +1,31 @@
-<form id="reg-form">
+<form id="form-reg">
     <div class="col-lg-offset-4 col-lg-4
                 col-md-offset-4 col-md-4
                 col-sm-offset-4 col-sm-4
                 col-xd-offset-4 col-xd-4
     ">
         <h3 class="pull-middle">用户注册</h3>
-        <div class="form-group">
+        <div>
             <label>用户名</label>
-            <input id="reg-username" type="text" class="form-control" placeholder="请输入用户名" v-model="username">
+            <span>
+                <input id="reg-username" type="text" class="form-control" placeholder="请输入用户名" v-model="username">
+                <label class="msg-exception">{{exUsername}}</label>
+            </span>
         </div>
-        <div class="form-group">
+        <div>
             <label>电子邮箱</label>
             <input id="reg-email" type="text" class="form-control" placeholder="请输入电子邮箱" v-model="email">
+            <label class="msg-exception">{{exEmail}}</label>
         </div>
-        <div class="form-group">
+        <div>
             <label>用户密码</label>
             <input id="reg-password" type="password" class="form-control" placeholder="请输入用户密码" v-model="password">
+            <label class="msg-exception">{{exPassword}}</label>
         </div>
         <div class="form-group">
             <label>确认密码</label>
             <input id="reg-rePassword" type="password" class="form-control" placeholder="请确认用户密码" v-model="rePassword">
+            <label class="msg-exception">{{exRePassword}}</label>
         </div>
         <button id="btn-reg" type="button" class="btn btn-default">注册</button>
     </div>
@@ -34,38 +40,54 @@
     // 定义邮箱限制条件
     var emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
     // 创建vue对象
-    var vm = new Vue({
-        el: '#reg-form',
+    var regVM = new Vue({
+        el: '#form-reg',
         data: {
             username:"",
             email:"",
             password:"",
-            rePassword:""
+            rePassword:"",
+            exUsername:"",
+            exEmail:"",
+            exPassword:"",
+            exRePassword:""
         }
     });
     // 页面就绪事件
     $(function(){
         // 绑定提交按钮事件
-        $("#btn-reg").click(reg)
+        $("#btn-reg").click(reg);
     });
+
 
     // 注册
     function reg(){
+        // 重置错误提示信息
+        resetMsgEx();
         // 调用验证方法
         if(regValidation()){
             var url = "/user/reg";
             var param = {
-                username:vm.username,
-                password:vm.password,
-                email:vm.email
+                username:regVM.username,
+                password:regVM.password,
+                email:regVM.email
             };
             // 发送AJAX请求
-            $.post(url,param,function(result){
-               if(result.state === 2000){
-                   alert("注册成功!");
-               }else{
+            $.post(url,param,function(result) {
+                if (result.state == 2000) {
+                    // 提示成功信息
+                    alert("注册成功!");
+                    // 绑定id数据
+                    $("#mainContentId").data("userId",result.data);
+                    // 加载初始化个人信息页面
+                    $("#context-container").load("/page/initinfo");
+                }else if(result.state == 4004){
+                    regVM.exUsername = "用户名已存在！"
+                }else if(result.state == 4003){
+                    regVM.exEmail = "该邮箱已被使用！"
+                }else{
                    alert(result.message);
-               }
+                }
             });
         }
     }
@@ -73,39 +95,47 @@
     // 验证用户输入的数据
     function regValidation(){
         // 获取用户名长度
-        var userLength = vm.username.length;
+        var userLength = regVM.username.length;
         // 判断用户名长度是否不在范围
         if(userLength < usernameLengthMin || userLength > usernameLengthMax){
             // 是：显示提示
-
-            // 返回false
-            return false;
-        }
-        // 获取密码长度
-        var pwdLength = vm.password.length;
-        // 判断密码长度是否不在范围
-        if(pwdLength < passwordLengthMin || pwdLength > passwordLengthMax){
-            // 是：显示提示
-
+            regVM.exUsername = "用户名长度需要在" + usernameLengthMin + "~" + usernameLengthMax + "之间！"
             // 返回false
             return false;
         }
         // 判断邮箱是否符合规则
-        if(!emailReg.test(vm.email)){
+        if(!emailReg.test(regVM.email)){
             // 是：显示提示
-
+            regVM.exEmail = "邮箱格式不正确！";
+            // 返回false
+            return false;
+        }
+        // 获取密码长度
+        var pwdLength = regVM.password.length;
+        // 判断密码长度是否不在范围
+        if(pwdLength < passwordLengthMin || pwdLength > passwordLengthMax){
+            // 是：显示提示
+            regVM.exPassword = "密码长度需要在" + passwordLengthMin + "~" + passwordLengthMax + "之间！"
             // 返回false
             return false;
         }
         // 判断两次输入密码是否不一致
-        if(vm.password != vm.rePassword){
+        if(regVM.password != regVM.rePassword){
             // 是：显示提示
-
+            regVM.exRePassword = "两次密码输入不一致！"
             // 返回false
             return false;
         }
         // 返回true
         return true;
+    }
+
+    // 重置错误提示信息
+    function resetMsgEx(){
+        regVM.exUsername = "";
+        regVM.exPassword = "";
+        regVM.exRePassword = "";
+        regVM.exEmail = "";
     }
 </script>
 

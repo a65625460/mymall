@@ -7,7 +7,7 @@
 
     <!--插入用户数据-->
     <!--Integer insert(UserDO userDO);-->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(
 	        username,password,salt,email,
 	        nickname,phone,gender,age,
@@ -21,6 +21,22 @@
         )
     </insert>
 
+    <!--根据id修改用户数据-->
+    <!--Integer updateInfoById(UserDO userDO);-->
+    <update id="updateInfoById">
+        UPDATE
+            t_user
+        SET
+	        nickname=#{nickname},
+	        phone=#{phone},
+	        gender=#{gender},
+	        age=#{age},
+	        modified_user=#{modifiedUser},
+	        modified_time=#{modifiedTime}
+	    WHERE
+	        id=#{id}
+    </update>
+
     <!--根据用户名查找用户-->
     <!--UserDO findByUsername(String username);-->
     <select id="findByUsername" resultType="com.dong.mymall.pojo.UserDO">
@@ -31,6 +47,12 @@
     <!--UserDO findByEmail(String email);-->
     <select id="findByEmail" resultType="com.dong.mymall.pojo.UserDO">
         SELECT * FROM t_user WHERE email=#{email}
+    </select>
+
+    <!--根据id查找用户-->
+    <!--UserDO findById(Long id);-->
+    <select id="findById" resultType="com.dong.mymall.pojo.UserDO">
+        SELECT * FROM t_user WHERE id=#{id}
     </select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.dong.mymall.service;
 
 import com.dong.mymall.pojo.UserDO;
+import com.dong.mymall.service.ex.*;
 
 /**
  * 处理用户数据的业务层接口
@@ -8,7 +9,18 @@ import com.dong.mymall.pojo.UserDO;
 public interface UserService {
     /**
      * 添加新用户
+     *
      * @param userDO 用户数据
+     * @return 用户id
      */
-    void addnew(UserDO userDO);
+    Long addnew(UserDO userDO)
+            throws ArgumentEmptyException, DataLengthNotMatchException, DataFormatNotMatchException,
+            UsernameDuplicateException, EmailDuplicateException, InsertException;
+
+
+    /**
+     * 修改用户个人信息
+     * @param userDO 修改后的用户信息
+     */
+    void modifyInfo(UserDO userDO);
 }

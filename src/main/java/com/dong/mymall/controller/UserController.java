@@ -16,8 +16,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/reg")
-    private JsonResult<Void> addnew(UserDO userDO){
-        userService.addnew(userDO);
+    public JsonResult<Long> addnew(UserDO userDO){
+        Long data = userService.addnew(userDO);
+        return JsonResult.getSuccessResult(data);
+    }
+
+    @PostMapping("/modifyInfo")
+    public JsonResult<Void> modifyInfo(UserDO userDO){
+        userService.modifyInfo(userDO);
         return JsonResult.getSuccessResult();
     }
 }

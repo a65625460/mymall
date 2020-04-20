@@ -35,6 +35,19 @@ public class UserMapperTests {
     }
 
     @Test
+    public void updateInfoById(){
+        UserDO userDO = new UserDO();
+        userDO.setId(1L);
+        userDO.setNickname("admin");
+        userDO.setGender(0);
+        userDO.setAge(20);
+        userDO.setPhone("13800138000");
+        userDO.setModifiedTime(new Date());
+        userDO.setModifiedUser("admin");
+        mapper.updateInfoById(userDO);
+    }
+
+    @Test
     public void findByUsername(){
         String username = "admin";
         UserDO userDO = mapper.findByUsername(username);
@@ -45,6 +58,13 @@ public class UserMapperTests {
     public void findByEmail(){
         String email = "admin@163.com";
         UserDO userDO = mapper.findByEmail(email);
+        System.err.println(userDO);
+    }
+
+    @Test
+    public void findById(){
+        Long id = 1L;
+        UserDO userDO = mapper.findById(id);
         System.err.println(userDO);
     }
 }

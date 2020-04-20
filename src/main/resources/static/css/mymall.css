@@ -15,3 +15,9 @@ a:hover{
     margin: 0 auto;
     display: table;
 }
+/*用户输入数据错误时给出的提示的样式*/
+.msg-exception{
+    margin-top: 5px;
+    color: #e22b2b;
+    font-weight: normal;
+}

@@ -31,7 +31,9 @@ public class UserServiceImpl implements UserService {
     @Value("${username.length-min}")
     private int usernameLengthMin;
 
-    public void addnew(UserDO userDO) {
+    public Long addnew(UserDO userDO)
+            throws ArgumentEmptyException, DataLengthNotMatchException, DataFormatNotMatchException,
+            UsernameDuplicateException, EmailDuplicateException, InsertException{
         // 判断userDO是否为null
         if(userDO == null){
             // 是：ArgumentEmptyException
@@ -91,9 +93,11 @@ public class UserServiceImpl implements UserService {
         String salt = UUID.randomUUID().toString();
         // 调用加密方法加密
         String password = getMD5Password(userDO.getPassword(), salt);
-        // 向userDO中更新password属性，添加salt和四个日志信息
+        // 向userDO中更新password属性，添加salt、isDelete和四个日志信息，昵称默认为用户名
+        userDO.setNickname(userDO.getUsername());
         userDO.setPassword(password);
         userDO.setSalt(salt);
+        userDO.setIsDelete(0);
         Date now = new Date();
         String username = userDO.getUsername();
         userDO.setCreateUser(username);
@@ -102,6 +106,38 @@ public class UserServiceImpl implements UserService {
         userDO.setModifiedTime(now);
         // 调用持久层方法，插入用户信息
         insert(userDO);
+        // 判断userDO是否为null
+        if (userDO.getId() == null) {
+            // 是：InsertException
+            throw new InsertException("数据插入失败，插入数据时出现未知错误！");
+        }
+        return userDO.getId();
+    }
+
+    @Override
+    public void modifyInfo(UserDO userDO) {
+        // 判断userDO是否为null
+        if(userDO == null){
+            // 是：return
+            return;
+        }
+        // 调用持久层方法，根据id查找用户数据
+        UserDO result = findById(userDO.getId());
+        // 判断返回结果是否为null
+        if (result == null) {
+            // 是：UserNotFoundException
+            throw new UserNotFoundException("修改用户个人信息失败，找不到对应的用户！");
+        }
+        // 判断userDO.nickname是否为空
+        if(StringUtils.isEmpty(userDO.getNickname())){
+            // 是：将nickname设为username的值
+            userDO.setNickname(result.getUsername());
+        }
+        // 补充日志属性
+        userDO.setModifiedUser(result.getUsername());
+        userDO.setModifiedTime(new Date());
+        // 调用持久层方法，修改用户个人信息
+        updateInfoById(userDO);
     }
 
     /**
@@ -130,6 +166,18 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据id修改用户个人信息
+     * @param userDO 修改后的用户数据
+     * @return 修改成功的行数
+     */
+    private void updateInfoById(UserDO userDO) {
+        Integer rows = userMapper.updateInfoById(userDO);
+        if (rows != 1) {
+            throw new UpdateException("数据更新失败，更新数据时出现未知错误！");
+        }
+    }
+
+    /**
      * 根据用户名查找用户
      * @param username 用户名
      * @return 查到的用户数据
@@ -145,6 +193,15 @@ public class UserServiceImpl implements UserService {
      */
     private UserDO findByEmail(String email) {
         return userMapper.findByEmail(email);
+    }
+
+    /**
+     * 根据id查找用户
+     * @param id 用户id
+     * @return 查找的用户数据
+     */
+    private UserDO findById(Long id) {
+        return userMapper.findById(id);
     }
 
 }

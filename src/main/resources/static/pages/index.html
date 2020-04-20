@@ -54,7 +54,8 @@
 <script>
     // 页面就绪事件
     $(function(){
-        $("#msg-reg").click(bindPage("msg-reg","/page/reg", "用户注册"));
+        $("#name-title").text("首页");
+        $("#msg-reg").click(bindPage("msg-reg","/page/regTemplate", "用户注册"));
     });
 
 
@@ -64,9 +65,9 @@
         $("#" + btn).click(function(){
             // 加载内容
             $("#mainContentId").load(url);
+            // 替换页面标题
+            $("#name-title").text(name)
         });
-        // 替换页面标题
-        $("#name-title").text(name)
     }
 </script>
 </html>
