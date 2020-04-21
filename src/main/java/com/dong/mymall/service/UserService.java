@@ -22,5 +22,13 @@ public interface UserService {
      * 修改用户个人信息
      * @param userDO 修改后的用户信息
      */
-    void modifyInfo(UserDO userDO);
+    void modifyInfo(UserDO userDO) throws UserNotFoundException;
+
+    /**
+     * 修改用户头像
+     * @param userDO 修改后的用户数据
+     */
+    void modifyAvatar(UserDO userDO) throws UserNotFoundException,ArgumentEmptyException,UpdateException;
+
+    UserDO login(String username, String password) throws UserNotFoundException, PasswordNotMatchException;
 }

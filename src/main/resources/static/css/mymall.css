@@ -21,3 +21,21 @@ a:hover{
     color: #e22b2b;
     font-weight: normal;
 }
+/*上传头像界面的图片样式*/
+.img-avatar-upload{
+    width: 140px;
+    height: 140px;
+    margin-bottom: 20px;
+}
+/*按钮占满上级元素的宽*/
+.btn-full-line{
+    width: 100%;
+}
+/*跳过的a标签样式*/
+.a-skip{
+    line-height: 32px;
+}
+/*上传头像按钮的样式*/
+.btn-avatar-upload{
+    margin-bottom: 20px;
+}

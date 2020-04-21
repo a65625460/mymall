@@ -35,6 +35,16 @@ public class UserMapperTests {
     }
 
     @Test
+    public void updateAvatarById(){
+        UserDO userDO = new UserDO();
+        userDO.setId(11L);
+        userDO.setAvatar("/img/avatar/1587456487157375336736997200.JPG");
+        userDO.setModifiedTime(new Date());
+        userDO.setModifiedUser("a65625460");
+        mapper.updateAvatarById(userDO);
+    }
+
+    @Test
     public void updateInfoById(){
         UserDO userDO = new UserDO();
         userDO.setId(1L);

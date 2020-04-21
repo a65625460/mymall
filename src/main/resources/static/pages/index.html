@@ -55,7 +55,8 @@
     // 页面就绪事件
     $(function(){
         $("#name-title").text("首页");
-        $("#msg-reg").click(bindPage("msg-reg","/page/regTemplate", "用户注册"));
+        bindPage("msg-reg","/page/regTemplate", "用户注册");
+        bindPage("msg-login","/page/login", "用户登录");
     });
 
 

@@ -1,0 +1,69 @@
+<form id="form-avatar-upload">
+    <div class="col-lg-offset-4 col-lg-4
+                    col-md-offset-3 col-md-6
+                    col-sm-offset-3 col-sm-6
+                    col-xd-offset-3 col-xd-6
+        ">
+
+        <img id="img-avatar-upload" src="/img/avatar/default-avatar.png" class="img-circle img-responsive center-block img-avatar-upload">
+
+        <input id="btn-avatar-file" class="btn btn-default btn-full-line btn-avatar-upload" name="file" type="file" value="选择头像">
+        <button id="btn-avatar-upload" type="button" class="btn btn-default">确认</button>
+        <a id="skip-avatar-upload" class="pull-right a-skip">跳过</a>
+    </div>
+    <script>
+        // 页面就绪事件
+        $(function(){
+            // 进度条颜色改变
+            updateProgressInfo($("#progress-info"),$("#progress-avatar-upload"));
+            // 绑定跳过按钮
+            $("#skip-avatar-upload").click(loadRegSuccess);
+            // 判定文件内容改变事件
+            $("#btn-avatar-file").change(uploadUserAvatar);
+            // 绑定确认按钮
+            $("#btn-avatar-upload").click(updateAvatar);
+        });
+
+        // 修改用户头像
+        function updateAvatar(){
+            var url = "/user/avatar/modify";
+            var param = {
+                id:$("#mainContentId").data("userId"),
+                avatar:$("#img-avatar-upload").attr("src")
+            }
+            $.post(url,param,function(result){
+                if(result.state == 2000){
+                    // 跳转页面
+                    loadRegSuccess();
+                }else{
+                    alert(result.message);
+                }
+            });
+        }
+
+        // 上传头像
+        function uploadUserAvatar(){
+            $.ajax({
+                url:"/upload/user/avatar",
+                data:new FormData($("#form-avatar-upload")[0]),
+                type:"POST",
+                processData: false,
+                contentType: false,
+                dataType:"json",
+                success:function(result){
+                    if(result.state == 2000){
+                        // 替换头像图片
+                        $("#img-avatar-upload").prop("src",result.data);
+                    }else{
+                        alert(result.message);
+                    }
+                }
+            });
+        }
+
+        // 加载注册成功页面
+        function loadRegSuccess(){
+            $("#context-container").load("/page/regSuccess");
+        }
+    </script>
+</form>

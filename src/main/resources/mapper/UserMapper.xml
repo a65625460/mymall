@@ -21,6 +21,19 @@
         )
     </insert>
 
+    <!--根据id修改用户的头像-->
+    <!--Integer updateAvatarById(UserDO userDO);-->
+    <update id="updateAvatarById">
+        UPDATE
+            t_user
+        SET
+	        avatar=#{avatar},
+	        modified_user=#{modifiedUser},
+	        modified_time=#{modifiedTime}
+	    WHERE
+	        id=#{id}
+    </update>
+
     <!--根据id修改用户数据-->
     <!--Integer updateInfoById(UserDO userDO);-->
     <update id="updateInfoById">

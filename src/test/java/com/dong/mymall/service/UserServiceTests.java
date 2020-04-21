@@ -33,4 +33,22 @@ public class UserServiceTests {
         userDO.setModifiedUser("a65625460");
         service.modifyInfo(userDO);
     }
+
+    @Test
+    public void modifyAvatar(){
+        UserDO userDO = new UserDO();
+        userDO.setId(12L);
+        userDO.setAvatar("/img/avatar/1587456487157375336736997200.JPG");
+        userDO.setModifiedTime(new Date());
+        userDO.setModifiedUser("a656254601");
+        service.modifyAvatar(userDO);
+    }
+
+    @Test
+    public void login(){
+        String username = "a65625460";
+        String password = "a65092679";
+        UserDO userDO = service.login(username, password);
+        System.err.println(userDO);
+    }
 }

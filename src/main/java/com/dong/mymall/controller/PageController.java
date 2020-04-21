@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 该控制器用于响应整个页面给用户
  */
 @Controller
-public class pageController {
+public class PageController {
 
     @GetMapping("/")
     public String getIndex(){

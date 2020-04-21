@@ -1,0 +1,27 @@
+<div class="col-lg-offset-4 col-lg-4
+                    col-md-offset-3 col-md-6
+                    col-sm-offset-3 col-sm-6
+                    col-xd-offset-3 col-xd-6
+        ">
+    <h2 class="text-primary text-center">恭喜您，注册成功！</h2>
+    <h4 class="text-primary text-center">5秒后跳转登录页面</h4>
+
+</div>
+<script>
+    $(function(){
+        // 进度条颜色改变
+        updateProgressRegSuccess($("#progress-info"),$("#progress-avatar-upload"));
+
+    });
+    function updateProgressRegSuccess(){
+        updateProgressInfo($("#progress-avatar-upload"),$("#progress-reg-success"));
+        $("#progress-reg-success").addClass("progress-bar-success");
+    }
+    // 设置定时器
+    setTimeout(function(){
+        // 跳转页面
+        $("#mainContentId").load("/page/login");
+        // 替换页面标题
+        $("#name-title").text("用户登录");
+    },5000)
+</script>

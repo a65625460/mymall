@@ -1,6 +1,7 @@
 package com.dong.mymall.mapper;
 
 import com.dong.mymall.pojo.UserDO;
+import org.apache.catalina.User;
 
 /**
  * 处理用户数据的持久层接口
@@ -15,9 +16,16 @@ public interface UserMapper {
     Integer insert(UserDO userDO);
 
     /**
+     * 根据id修改用户的头像
+     * @param userDO 修改后的用户数据
+     * @return 修改成功的记录条数
+     */
+    Integer updateAvatarById(UserDO userDO);
+
+    /**
      * 根据id修改用户个人信息
      * @param userDO 修改后的用户数据
-     * @return 修改成功的行数
+     * @return 修改成功的记录条数
      */
     Integer updateInfoById(UserDO userDO);
 

@@ -1,9 +1,9 @@
 <form id="form-reg">
     <div class="col-lg-offset-4 col-lg-4
-                col-md-offset-4 col-md-4
-                col-sm-offset-4 col-sm-4
-                col-xd-offset-4 col-xd-4
-    ">
+                    col-md-offset-3 col-md-6
+                    col-sm-offset-3 col-sm-6
+                    col-xd-offset-3 col-xd-6
+        ">
         <h3 class="pull-middle">用户注册</h3>
         <div>
             <label>用户名</label>
@@ -28,6 +28,7 @@
             <label class="msg-exception">{{exRePassword}}</label>
         </div>
         <button id="btn-reg" type="button" class="btn btn-default">注册</button>
+        <a id="skip-reg" class="pull-right a-skip">跳过</a>
     </div>
 </form>
 <script>
@@ -57,6 +58,10 @@
     $(function(){
         // 绑定提交按钮事件
         $("#btn-reg").click(reg);
+        // TODO 临时使用，跳过注册
+        $("#skip-reg").click(function(){
+            $("#context-container").load("/page/initinfo");
+        });
     });
 
 

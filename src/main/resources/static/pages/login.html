@@ -1,0 +1,100 @@
+<form id="form-login">
+    <div class="col-lg-offset-4 col-lg-4
+                    col-md-offset-3 col-md-6
+                    col-sm-offset-3 col-sm-6
+                    col-xd-offset-3 col-xd-6
+        ">
+        <h3 class="pull-middle">用户登录</h3>
+        <div>
+            <label>用户名</label>
+            <span>
+                <input id="login-username" type="text" class="form-control" placeholder="请输入用户名" v-model="username">
+            </span>
+        </div>
+        <br/>
+        <div>
+            <label>用户密码</label>
+            <input id="login-password" type="password" class="form-control" placeholder="请输入用户密码" v-model="password">
+            <label class="msg-exception">{{exLogin}}</label>
+        </div>
+        <button id="btn-login" type="button" class="btn btn-default">登录</button>
+    </div>
+</form>
+<script>
+    // 定义密码限制条件
+    var passwordLengthMin = 6;
+    var passwordLengthMax = 11;
+    // 定义用户名限制条件
+    var usernameLengthMin = 4;
+    var usernameLengthMax = 20;
+    // 创建vue对象
+    var loginVM = new Vue({
+        el: '#form-login',
+        data: {
+            username:"",
+            password:"",
+            exLogin:""
+        }
+    });
+    // 页面就绪事件
+    $(function(){
+        // 绑定提交按钮事件
+        $("#btn-login").click(login);
+    });
+
+
+    // 登录
+    function login(){
+        // 重置错误提示信息
+        resetMsgEx();
+        // 调用验证方法
+        if(loginValidation()){
+            var url = "/user/login";
+            var param = {
+                username:loginVM.username,
+                password:loginVM.password,
+            };
+            // 发送AJAX请求
+            $.post(url,param,function(result) {
+                if (result.state == 2000) {
+                    // 提示成功信息
+                    alert("登陆成功！");
+                } else if(result.state == 0 || result.state == 1){
+                    alert(result.message);
+                } else{
+                    loginVM.exLogin = result.message;
+                }
+            });
+        }
+    }
+
+    // 验证用户输入的数据
+    function loginValidation(){
+        // 获取用户名长度
+        var userLength = loginVM.username.length;
+        // 判断用户名长度是否不在范围
+        if(userLength < usernameLengthMin || userLength > usernameLengthMax){
+            // 是：显示提示
+            loginVM.exLogin = "用户名或密码错误！"
+            // 返回false
+            return false;
+        }
+        // 获取密码长度
+        var pwdLength = loginVM.password.length;
+        // 判断密码长度是否不在范围
+        if(pwdLength < passwordLengthMin || pwdLength > passwordLengthMax){
+            // 是：显示提示
+            loginVM.exLogin = "用户名或密码错误！"
+            // 返回false
+            return false;
+        }
+        // 返回true
+        return true;
+    }
+
+    // 重置错误提示信息
+    function resetMsgEx(){
+        loginVM.exLogin = ""
+    }
+</script>
+
