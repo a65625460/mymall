@@ -16,6 +16,11 @@ public class PageController {
         return "index";
     }
 
+    @GetMapping("/userinfo")
+    public String getUserInfo(){
+        return "userinfo";
+    }
+
     @GetMapping("/page/{page}")
     public String getPage(@PathVariable("page") String page){
         return page;

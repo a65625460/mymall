@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/mymall.css"/>
     <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/jquery-cookie.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/vue.min.js"></script>
+    <script src="/js/mymall.js"></script>
 </head>
 
 <body>
@@ -17,15 +19,13 @@
         <div class="container">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand">商城</a>
+                    <a href="/" class="navbar-brand">商城</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a id="msg-login">亲，请登录</a></li>
-                        <li><a id="msg-reg">免费注册</a></li>
-                    </ul>
+                    <ul id="nav-avatar-login" class="nav navbar-nav">
 
+                    </ul>
                     <!--查询部分开始-->
                     <form class="navbar-form navbar-left">
                         <div class="form-group">
@@ -55,20 +55,8 @@
     // 页面就绪事件
     $(function(){
         $("#name-title").text("首页");
-        bindPage("msg-reg","/page/regTemplate", "用户注册");
-        bindPage("msg-login","/page/login", "用户登录");
+        // 判断登录态
+        loadLoginState()
     });
-
-
-    // 绑定按钮与页面的方法
-    function bindPage(btn, url, name){
-        // 判断按钮点击事件
-        $("#" + btn).click(function(){
-            // 加载内容
-            $("#mainContentId").load(url);
-            // 替换页面标题
-            $("#name-title").text(name)
-        });
-    }
 </script>
 </html>

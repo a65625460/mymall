@@ -56,6 +56,10 @@
                         $("#img-avatar-upload").prop("src",result.data);
                     }else{
                         alert(result.message);
+                        // 切回默认头像
+                        $("#img-avatar-upload").prop("src","/img/avatar/default-avatar.png");
+                        // 重置文件按钮
+                        $("#btn-avatar-file").val("");
                     }
                 }
             });

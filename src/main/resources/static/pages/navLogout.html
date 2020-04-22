@@ -1,0 +1,9 @@
+<li><a id="msg-login">亲，请登录</a></li>
+<li><a id="msg-reg">免费注册</a></li>
+<script>
+    // 页面就绪事件
+    $(function(){
+        bindPage("msg-reg","/page/regTemplate", "用户注册");
+        bindPage("msg-login","/page/login", "用户登录");
+    });
+</script>

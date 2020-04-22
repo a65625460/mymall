@@ -59,6 +59,14 @@
                 if (result.state == 2000) {
                     // 提示成功信息
                     alert("登陆成功！");
+                    // 存放cookie
+                    $.cookie("id",result.data.id);
+                    $.cookie("avatar",result.data.avatar);
+                    $.cookie("nickname",result.data.nickname);
+                    // 判断登录态
+                    loadLoginState();
+                    // 刷新页面
+                    location.reload();
                 } else if(result.state == 0 || result.state == 1){
                     alert(result.message);
                 } else{
@@ -75,7 +83,7 @@
         // 判断用户名长度是否不在范围
         if(userLength < usernameLengthMin || userLength > usernameLengthMax){
             // 是：显示提示
-            loginVM.exLogin = "用户名或密码错误！"
+            loginVM.exLogin = "用户名或密码错误！";
             // 返回false
             return false;
         }
@@ -84,7 +92,7 @@
         // 判断密码长度是否不在范围
         if(pwdLength < passwordLengthMin || pwdLength > passwordLengthMax){
             // 是：显示提示
-            loginVM.exLogin = "用户名或密码错误！"
+            loginVM.exLogin = "用户名或密码错误！";
             // 返回false
             return false;
         }

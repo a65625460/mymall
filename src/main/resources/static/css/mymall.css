@@ -39,3 +39,12 @@ a:hover{
 .btn-avatar-upload{
     margin-bottom: 20px;
 }
+/*登录后头像a标签的样式*/
+.a-nav-avatar{
+    padding: 10px !important;
+}
+/*登陆后头像图片的样式*/
+.img-nav-avatar{
+    width: 30px;
+    height: 30px;
+}

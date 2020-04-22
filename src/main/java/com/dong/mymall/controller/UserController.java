@@ -43,4 +43,10 @@ public class UserController {
         session.setAttribute("username",username);
         return JsonResult.getSuccessResult(data);
     }
+
+    @PostMapping("/logout")
+    public JsonResult<Void> login(HttpSession session) {
+        session.invalidate();
+        return JsonResult.getSuccessResult();
+    }
 }

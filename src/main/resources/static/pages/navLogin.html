@@ -1,0 +1,42 @@
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle a-nav-avatar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <img id="img-nav-avatar" src="/img/avatar/default-avatar.png" class="img-rounded img-nav-avatar">
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a id="nav-nickname"></a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="/userinfo">信息管理</a></li>
+        <li><a href="/" id="btn-logout">退出登录</a></li>
+    </ul>
+</li>
+<script>
+    // 页面就绪事件
+    $(function(){
+       setInfo();
+       $("#btn-logout").click(logout);
+    });
+
+    // 登出
+    function logout(){
+        var url = "/user/logout";
+        $.post(url,function(result){
+            if(result.state == 2000){
+                // 删除cookie
+                $.removeCookie("nickname");
+                $.removeCookie("avatar");
+                $.removeCookie("id");
+                // 判断登录态
+                loadLoginState();
+            }
+        });
+    }
+
+    // 设置昵称和头像
+    function setInfo(){
+        var nickname = $.cookie("nickname");
+        var avatar = $.cookie("avatar");
+        $("#nav-nickname").text(nickname);
+        $("#img-nav-avatar").attr("src",avatar);
+    }
+</script>

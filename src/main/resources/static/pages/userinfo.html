@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="name-title">用户信息</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/mymall.css"/>
+    <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/jquery-cookie.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/mymall.js"></script>
+</head>
+
+<body>
+<!--导航条开始-->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">商城</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul id="nav-avatar-login" class="nav navbar-nav">
+
+                </ul>
+                <!--查询部分开始-->
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入要查询的商品" size="30">
+                    </div>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </form>
+                <!--查询部分结束-->
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>购物车</a></li>
+                    <li><a>联系客服</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--导航条结束-->
+
+<!--显示部分开始-->
+<div class="container">
+    <div class="row">
+        <!--左侧用户导航部分开始-->
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xd-12">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">个人信息</a>
+                <a href="#" class="list-group-item">修改个人信息</a>
+                <a href="#" class="list-group-item">修改头像</a>
+            </div>
+        </div>
+        <!--左侧用户导航部分结束-->
+        <!--右侧主要部分开始-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xd-12">
+            <div id="mainContentId">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xd-12">
+                        <img src="/img/avatar/default-avatar.png" class="img-rounded img-avatar-upload center-block">
+                        <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-xd-offset-5">
+                            <label>用户名:</label>&nbsp;&nbsp;&nbsp;
+                            <span>a65625460</span>
+                            <br/>
+                            <label>昵称:</label>&nbsp;&nbsp;&nbsp;
+                            <span>没有梦想的东</span>
+                            <br/>
+                            <label>年龄:</label>&nbsp;&nbsp;&nbsp;
+                            <span>22</span>
+                            <br/>
+                            <label>性别:</label>&nbsp;&nbsp;&nbsp;
+                            <span>男</span>
+                            <br/>
+                            <label>手机:</label>&nbsp;&nbsp;&nbsp;
+                            <span>13588185729</span>
+                            <br/>
+                            <label>邮箱:</label>&nbsp;&nbsp;&nbsp;
+                            <span>806163009@qq.com</span>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--右侧主要部分结束-->
+    </div>
+</div>
+<!--显示部分结束-->
+</body>
+<script>
+    // 页面就绪事件
+    $(function(){
+        $("#name-title").text("用户信息");
+        // 判断登录态
+        loadLoginState()
+    });
+
+</script>
+</html>
